@@ -65,6 +65,17 @@
 
             <script type="text/javascript">
              function checkform() {
+
+
+            var a=document.regform.username.value;
+            var b=document.regform.password.value;
+            var c=document.regform.address.value;
+            if (a==null || a=="",b==null || b=="",c==null || c=="")
+            {
+                alert("Please Fill All Required Field");
+                return false;
+            }
+
              
             var address = document.regform.address.value;
 
@@ -72,12 +83,12 @@
             return true;
             } else if (address.length <= 15 )
             {
-                alert('Crypto address is not correct ');
+                alert('Sup Wallet address is not correct ');
             return false;
 
             }
              if(/^[a-zA-Z0-9- ]*$/.test(address) == false) {
-                alert('Crypto address is not correct ');
+                alert('Sup Wallet address is not correct ');
             return false;
             } 
             }
@@ -99,15 +110,17 @@
               
               
               <div class="form-group">
-                <label>Address</label>
-                <input name="address" type="text" class="form-control" placeholder="Your address">
+                <label>SUP Wallet Address</label>
+                <input name="address" type="text" class="form-control" placeholder="Your SUP wallet address">
               </div>
               
-              
+              <!--
               <div class="form-group">
                 <label>Asmoney username</label>
                 <input name="ausername" type="text" class="form-control" placeholder="Your Asmoney address">
               </div>
+              -->
+
               
               
               <button type="submit" name="register" class="btn btn-success">

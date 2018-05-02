@@ -1,6 +1,9 @@
 # PHPfaucet 
 PHPFaucet is an OpenSource software to run faucet for cryptocoins like Bitcoin, Dogecoin, Litecoin, Darkcoin and Peercoin. PHPFaucet allow you to make a faucet website within ten minutes. all PHPFaucet payments handle through AsMoney
 
+[screenshot]: https://github.com/cesardanielhg/faucetphp/blob/master/screenshot.jpg
+
+
 #Installation
 
 1 ) Create a MySQL database
@@ -14,17 +17,16 @@ PHPFaucet is an OpenSource software to run faucet for cryptocoins like Bitcoin, 
 
 #Configure Faucet
 
+When you start please verify that the main folder repo has CHMOD permissions to 777, and then back to the original permissions.
+
 Login to admin url by browsing yourdomain.com/admcenter/ , your default username and password are admin/admin.
 
 
 Captcha setting
 Go to solvemedia.com , create an account and add your website, you will receive three hashes from solve media , put the hashes in solvemedia setting.
 
-AsMoney API setting
-for sending payment, Create an AsMoney account, go to merchant section and make an API, you can set your AsMoney username, API name and API password to send faucet payments.
-
-AsMoney SCI setting
-for receive donate, go to merchant section of your AsMoney account, Set your username, sci name and sci password to receive payments. 
+AsMoney Option
+This option and code was commenting for SUP Projects reason 
 
 #ChangeLog
 
