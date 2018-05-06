@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2018-05-01 10:27:04
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2018-05-02 18:31:29
          compiled from "template/header.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:6790511835ae89558b7a504-72713147%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '7564e746cc0ff5595279a61981fab5f32b041419' => 
     array (
       0 => 'template/header.tpl',
-      1 => 1524556878,
+      1 => 1525305307,
       2 => 'file',
     ),
   ),
@@ -15,13 +15,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.21-dev',
+  'unifunc' => 'content_5ae89558bd1491_36187504',
   'variables' => 
   array (
     'logged' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.21-dev',
-  'unifunc' => 'content_5ae89558bd1491_36187504',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_5ae89558bd1491_36187504')) {function content_5ae89558bd1491_36187504($_smarty_tpl) {?>
 <!doctype html>
@@ -62,7 +62,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   <body>
     <div id="loader-wrapper">
       <div id="loader">
-        <img src="template/assets/images/superiorcoin-animation.gif" alt="">
+        <img src="template/assets/images/superiorcoin-animation2.gif" alt="">
       </div>
 
       <div class="loader-section section-left"></div>
@@ -89,9 +89,12 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 			 	<li class="nav-item"><a class="nav-link"  href="register.php">Register</a></li>			
 			 	<li class="nav-item"><a class="nav-link"  href="howto.php">How It works?</a></li>            <?php } else { ?>                        
 			 	<li class="nav-item"><a  class="nav-link" href="withdrawal.php">Withdrawal</a></li>
+        <!--
+			 	<li class="nav-item"><a class="nav-link"  href="donate.php">Donate</a></li>
 
-			 	<li class="nav-item"><a class="nav-link"  href="donate.php">Donate</a></li>                        
-			 	<li><a  class="nav-link" href="referral.php">Referral</a></li>                        
+			 	<li><a  class="nav-link" href="referral.php">Referral</a></li> 
+
+        -->                       
 			 	<li class="nav-item">
 			 		<a  class="nav-link" href="pass.php">Change Password</a>
 			 	</li>                                      

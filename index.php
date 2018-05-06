@@ -7,12 +7,40 @@ require_once "header.php";
 require_once "maincore.php";
 
 //Adding Lib for SuperiorCoin Functions
-/*
-require "../vendor/autoload.php";
-use Superior\Wallet;
-$walletFaucet = new Superior\Wallet();
-$balanceFaucet = $walletFaucet->getRealBalance();
-*/
+$filename = './vendor/autoload.php';
+if (file_exists($filename)) {
+    echo "The file $filename exists";
+    $smarty->assign('faucet_balance','190.99'); 
+
+    //Load SUP library only if exists in server/computer
+
+    /*
+	require "../vendor/autoload.php";
+	use Superior\Wallet;
+	$walletFaucet = new Superior\Wallet();
+	*/
+
+
+	//$balanceFaucet = $walletFaucet->getRealBalance();
+	//$balanceFaucet = $walletFaucet->getBalance();
+
+
+	//Adding Code to Display Superior CoinBalance Faucet //
+
+
+	/*
+	$getfaucetbal = json_decode($balanceFaucet);
+	$realBalance = $balanceFaucet->{'unlocked_balance'};
+
+	$smarty->assign('faucet_balance',$realBalance);
+	*/  
+
+} else {
+    //IF SUP Library does not exists load summy balance
+    $smarty->assign('faucet_balance','190.99');  
+
+}
+
 
 
 
@@ -101,9 +129,6 @@ $solvemedia_response = solvemedia_check_answer($verkey,$_SERVER["REMOTE_ADDR"],$
 if(isset($uid)){
 
 
-
-
-
 if(isset($_SESSION['user']['win'])){
 
 	$db->queryres("select * from tbl_config where header='currency'");
@@ -127,19 +152,6 @@ if(isset($_SESSION['error']['capt'])){
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 $db->queryres("select reset from tbl_user where user_id='$uid' or ip='$ip' order by reset desc");
 
 	if($db->res['reset']-time() > 0){
@@ -149,13 +161,6 @@ $db->queryres("select reset from tbl_user where user_id='$uid' or ip='$ip' order
 		$smarty->assign('timer_amount',$db->res['reset']-time());
 
 	}
-
-
-
-
-
-
-
 
 
 	$with=array();
@@ -176,47 +181,12 @@ $db->queryres("select reset from tbl_user where user_id='$uid' or ip='$ip' order
 
 $smarty->assign('captcha',solvemedia_get_html($privkey));
 
-
-
-
-
 }else{
-
-	
-
-	$smarty->assign('notlogged',true);
-
-	
-
-	
-
+	$smarty->assign('notlogged',true);	
 }
 
 
-
-
-//Adding Code to Display Superior CoinBalance Faucet //
-
-
-//$getfaucetbal = json_decode($balanceFaucet);
-/*
-$realBalance = $balanceFaucet->{'unlocked_balance'};
-
-
-$smarty->assign('faucet_balance',$realBalance);  
-*/
-
-$smarty->assign('faucet_balance','190.99');  
-
-
-
-
-
-
-
 $smarty->display('template/index.tpl');
-
-
 
 }
 

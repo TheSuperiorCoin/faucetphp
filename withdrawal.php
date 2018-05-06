@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors', true);
 error_reporting(E_ALL & ~ E_NOTICE); ini_set('display_errors', 1);
 require_once "header.php";
 require_once "maincore.php";
@@ -53,7 +54,7 @@ if( isset($_POST['currency'] ) ){
 	
 	if($amount>=$db->res['value']){
 		if($userdet['credit']>=$amount){
-			$prepare=$db->mysqli->prepare("insert into tbl_withdrawal (user_id,amount,type) values (?,?,1) ");
+			$prepare=$db->mysqli->prepare("insert into tbl_withdrawal (user_id,amount,type, reccode) values (?,?,1,'dsdsdsds') ");
 			$prepare->bind_param('id',$uid,$fees);
 			$prepare->execute();
 			$prepare->close();

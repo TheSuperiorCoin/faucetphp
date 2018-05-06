@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2018-05-01 10:27:04
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2018-05-02 14:39:50
          compiled from "template/index.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:2730544075ae895585f6d37-83631837%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'be891685468c59e736459af6d2671af2dcb9173e' => 
     array (
       0 => 'template/index.tpl',
-      1 => 1524556878,
+      1 => 1525293579,
       2 => 'file',
     ),
   ),
@@ -15,6 +15,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.21-dev',
+  'unifunc' => 'content_5ae89558ad6053_94520009',
   'variables' => 
   array (
     'notlogged' => 0,
@@ -29,8 +31,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'faucet_balance' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.21-dev',
-  'unifunc' => 'content_5ae89558ad6053_94520009',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_5ae89558ad6053_94520009')) {function content_5ae89558ad6053_94520009($_smarty_tpl) {?><?php echo $_smarty_tpl->getSubTemplate ('template/header.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, null, array(), 0);?>
 
@@ -78,8 +78,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 				<?php if ($_smarty_tpl->tpl_vars['prize']->value) {?>
 					<div class="alert alert-success">
 						You have won <?php echo $_smarty_tpl->tpl_vars['prize']->value;?>
- <?php echo $_smarty_tpl->tpl_vars['curency']->value;?>
-
+ SUP <!--<?php echo $_smarty_tpl->tpl_vars['curency']->value;?>
+-->
 					</div>
 				<?php }?>
 				<?php if ($_smarty_tpl->tpl_vars['capt']->value) {?>

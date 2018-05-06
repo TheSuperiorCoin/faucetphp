@@ -42,7 +42,7 @@
 				<br>
 				{if $prize}
 					<div class="alert alert-success">
-						You have won {$prize} {$curency}
+						You have won {$prize} SUP <!--{$curency}-->
 					</div>
 				{/if}
 				{if $capt}

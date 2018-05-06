@@ -5,10 +5,19 @@ require_once "maincore.php";
 require_once "includes/dbconnector.class.php";
 
 //Adding Lib for SuperiorCoin Functions
+
+
 require "../vendor/autoload.php";
 use Superior\Wallet;
 $walletFaucet = new Superior\Wallet();
 
+
+
+
+$now = new DateTime();
+//echo $now->format('Y-m-d H:i:s');    // MySQL datetime format
+$run_date= $now->getTimestamp();
+	
 
 
 function ChangetoMili($amount,&$currency) {
@@ -25,7 +34,7 @@ $db=new DbConnector;
 $db->queryres("select * from tbl_config where header='currency'");
 $faucetcurrency=$db->res['value'];
 $db->queryres("select * from tbl_config where header='requestcount'");
-$requestcount=$db->res['value'];
+$requestcount=$db->res['value']; 
 	
 
 //Change to mili bitcoin because asmoney get currencies based on milicoin
@@ -55,61 +64,27 @@ while($res=$db->fetchArray()){
 }
 
 
-if (count($btcamounts) > $requestcount)
+if (count($btcamounts) >= $requestcount)
 {	
 		
 	echo "</br><h3>There are ". count($btcamounts)." no processed withdrawals in our database . </br> 
 	We will processing in group/lot of ". $requestcount." to run Superior Transfer cronjob.</br>";
-	echo "RUnning cronjob </h3>";
+	echo "Running cronjob... </h3>";
 
 	$btcamounts = array_slice($btcamounts, 0, $requestcount);
-	$destinations = array_slice($destinations, 0, 3);
-
-    
-	$pablo='5NKJdxdiCmccLyw53D8MzUhZYzDDvdBXshrVhUgYSYjyJFk3Wn5bMjsDSCxzSi1d95M83fENY7uEmUm5t2Uj8rGEFXFTQ3q';
-	$dennis = '5NbCTMansKp1AmRUV9sxxcBJEi4avk3dt7RsXsxo6vFVSqZCTEsuCgXTiQZCsKM5TdGQD2m6UpM58KoDLEtX7ofH61t9hNZ';
-    
-
-	$destination1 = (object) [
-	    'amount' => '3',
-	    'address' => $pablo
-	];
-	$destination2 = (object) [
-	    'amount' => '2',
-	    'address' => $dennis
-	];
-
-	
-	$destination22 = array();
-	$destination22[1] = (object) array('amount' => '1', 'address' => $pablo);
-	$destination22[2] = (object) array('amount' => '1', 'address' => $dennis);
-	
-    
-	echo "</br><h1>destinations</br></h1>";
-	print_r($destinations);
-
-    echo "</br><h1>destination22</br></h1>";
-	print_r($destination22);
-
-	
+	$destinations = array_slice($destinations, 0, $requestcount);
+    $total_amount = array_sum($btcamounts);
+     
     
 	$options2 = [
 	    'destinations' => $destinations
 	];
 	
-	echo "</br><h1>option2</br></h1>";
-	print_r($options2);
-	
 
 	$sup_transfer = $walletFaucet->transfer($options2);
-	print_r($sup_transfer);
 	$transfer_result = json_decode($sup_transfer);
 	
-	$now = new DateTime();
-	echo $now->format('Y-m-d H:i:s');    // MySQL datetime format
-	echo $now->getTimestamp();  
-
-
+	 
 
 	//if "fee" exists in transfer response means that transfe was successfull
 	if (isset($transfer_result->{'fee'})) {
@@ -118,22 +93,35 @@ if (count($btcamounts) > $requestcount)
 		$transfer_hash = $transfer_result->{'tx_hash'};
 		echo 
 		"Transfer Fee: ".$transfer_fee. 
-		"</br>Transfer Hash: ".$transfer_hash;
+		"</br>Transfer Hash: ".$transfer_hash.
+		"</br>Total Number of Transfers: ".$requestcount.
+		"</br>Total Amount Transfered: ".$total_amount.
+		"</br>------------------------------------------</br>";
+
 
 
 		$hash_transfer=$transfer_hash;
 
 		for ($i=0;$i<$requestcount;$i++) {
-			echo "Counter = ".$i." -- ";
 			$wid = $withdrawalid[$i];
-			print_r($wid);
+			echo "</br>--> Running transfer number: " .$i. "/ with amount of:" .$btcamounts[$i];
+			/*
 			echo "- update tbl_withdrawal set status=1,reccode=".$hash_transfer." where withdrawal_id= ".$wid.".</br>";
-			//$db2->query("update tbl_withdrawal set status=1,reccode='".$hash_transfer."',fee=".$transfer_fee." where withdrawal_id=".$wid."");
+			*/
+			
+			$db2->query("update tbl_withdrawal set status=1,reccode='".$hash_transfer."',fee=".$transfer_fee." where withdrawal_id=".$wid."");
+			
 		}
 
-	    echo "</br><h3>".$requestcount. " Withdrawals has been proceessed with hash number:".$hash_transfer."</h3>" ;
+		$db->query("insert into tbl_cronjob_history 
+			(  run_date, success,total_amount,total_transfers, fee, hash_transfers, error_transfer ) 
+	 values (".$run_date.",1 ,".$total_amount.", ".$requestcount.",".$transfer_fee.
+	 ", '$hash_transfer' , ''  ) ");
 
 
+	    echo "</br><h3>".$requestcount. " Withdrawal Transfers has been proceessed with hash number:".$hash_transfer."</h3>" ;
+
+	    
 	//if "fee" not exists in transfer response means that error exists
 	} else {
 		$transfer_errorcode = $transfer_result->{'code'};
@@ -142,11 +130,19 @@ if (count($btcamounts) > $requestcount)
 		echo 
 		"Error Code: ".$transfer_errorcode. 
 		"</br>Error Message: ".$transfer_errormessage;
+
+		$db->query("insert into tbl_cronjob_history 
+			(  run_date, success,total_amount,total_transfers, fee, hash_transfers, error_transfer ) 
+	 values (".$run_date.",1 ,".$total_amount.", ".$requestcount.",".$transfer_errorcode.
+	 ", '' , '$transfer_errormessage'  ) ");
+
+
+
 	}
 		
 }
 else {
-	echo "</br><h3>There are only ". count($btcamounts)." withdrawals in our database </br> We must have more than ". $requestcount." withdrawals to run Superior Transfer Cronjob.</h3>";
+	echo "</br><h3>There are only ". count($btcamounts)." withdrawals in our database </br> We must have  ". $requestcount." withdrawals or more to run Superior Transfer Cronjob.</h3>";
 				
 }
 

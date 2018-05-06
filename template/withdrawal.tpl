@@ -60,13 +60,13 @@
                 <td>
                 {if $foo['status']==0}
                 
-                	<div class="label label-warning">Pending</div>
+                  <div class="label label-warning">Pending</div>
                 
                 
                 
                 {elseif $foo['status']==1}
                 
-                	<div class="label label-success">Paid</div>
+                  <div class="label label-success">Paid</div>
                 
                 
                 {/if}
@@ -239,33 +239,7 @@
 
 
        
-      <script type="text/javascript">
-      function checkcoin() {
-       
-      var address = document.coin.address.value;
-      var amount = document.coin.amount.value;
-
-
-      if (amount <= 0) {
-      alert('Amount is incorrect');
-      return false;
-
-      }
-
-       if (address.length <= 15 )
-      {
-          alert('Crypto address is not correct ');
-      return false;
-      }
-
-      if(/^[a-zA-Z0-9- ]*$/.test(address) == false) {
-          alert('Crypto address is not correct ');
-      return false;
-      } 
-
-      return true;
-      }
-      </script>
+      
 
 
 
@@ -307,6 +281,37 @@
     </div>
     
     </form>
+
+
+
+
+    <script type="text/javascript">
+      function checkcoin() {
+       
+      var address = document.coin.address.value;
+      var amount = document.coin.amount.value;
+
+
+      if (amount <= 0) {
+      alert('Amount is incorrect');
+      return false;
+
+      }
+
+       if (address.length <= 15 )
+      {
+          alert('Crypto address is not correct ');
+      return false;
+      }
+
+      if(/^[a-zA-Z0-9- ]*$/.test(address) == false) {
+          alert('Crypto address is not correct ');
+      return false;
+      } 
+
+      return true;
+      }
+      </script>
     
   </div>
 </div>
